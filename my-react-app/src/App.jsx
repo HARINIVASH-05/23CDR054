@@ -3,12 +3,31 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import PhotoGallery from './components/PhotoGallery'
+import UploadPhoto from './components/UploadPhoto'
+import Notifications from './components/Notifications'
+
+// Read API base from Vite env: VITE_API_BASE
+// Example: set in .env or run dev with VITE_API_BASE=http://localhost:3000
+const API_BASE = import.meta.env.VITE_API_BASE ?? ''
+// Optionally set an API token for Authorization: Bearer <token>
+const API_TOKEN = import.meta.env.VITE_API_TOKEN ?? ''
+const USER_ID = import.meta.env.VITE_USER_ID ?? ''
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+      <header style={{ padding: 12 }}>
+        <h2>Photo demo</h2>
+        <p style={{ margin: 0, fontSize: 14 }}>
+          Backend API base: <code>{API_BASE || 'same origin'}</code>
+        </p>
+  <UploadPhoto apiBase={API_BASE} onUploaded={() => window.location.reload()} token={API_TOKEN} />
+  <PhotoGallery apiBase={API_BASE} token={API_TOKEN} />
+  <Notifications apiBase={API_BASE} token={API_TOKEN} userId={USER_ID} />
+      </header>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
